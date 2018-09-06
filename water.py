@@ -14,7 +14,7 @@ def solve(elm):
 def knapsack(limit, n, pipes):
     table = [[0 for i in range(limit+1)] for j in range(n+1)]
 
-    for i in range(limit + 1):
+    for i in range(1, limit + 1):
         table[0][i] = float('inf')
 
     for i in range(1, n+1):
