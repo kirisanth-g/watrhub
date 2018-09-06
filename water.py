@@ -3,10 +3,9 @@ import json
 def solve(elm):
     limit = elm['truck']
     n = len(elm['pipes'])
-    pipes = elm['pipes']
+    pipes = sorted(elm['pipes'], key=lambda p: p['litres'])
 
     table = knapsack(limit, n, pipes)
-    print(table)
     i, cost = find_last_value(table[n])
     route = trace(table, i, n, pipes)
     res = {'Pipes': route, 'Cost': cost}
@@ -22,7 +21,6 @@ def knapsack(limit, n, pipes):
         cost = pipes[i-1]['cost']
         litres = pipes[i-1]['litres']
         for j in range (1, limit+1):
-            print(table[i-1][j], table[i-1][j-litres], cost)
             if (litres > j):
                 table[i][j] = table[i-1][j]
             else:
@@ -53,8 +51,6 @@ def trace(table, index, n, pipes):
 
     return route
 
-def test():
-    txt = { 'truck': 10, 'pipes': [ { 'name': 'pipe 3', 'cost': 4, 'litres': 2 }] }
-    solve(txt)
-
-test()
+if __name__ == "__main__":
+    txt = { 'truck': 10, 'pipes': [{ 'name': 'pipe 1', 'cost': 1, 'litres': 4 }, { 'name': 'pipe 2', 'cost': 15, 'litres': 6}] }
+    print(solve(txt))
