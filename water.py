@@ -6,10 +6,10 @@ def solve(elm):
     pipes = elm['pipes']
 
     table = knapsack(limit, n, pipes)
+    print(table)
     i, cost = find_last_value(table[n])
     route = trace(table, i, n, pipes)
     res = {'Pipes': route, 'Cost': cost}
-    print(res)
     return res
 
 def knapsack(limit, n, pipes):
@@ -19,9 +19,10 @@ def knapsack(limit, n, pipes):
         table[0][i] = float('inf')
 
     for i in range(1, n+1):
+        cost = pipes[i-1]['cost']
+        litres = pipes[i-1]['litres']
         for j in range (1, limit+1):
-            cost = pipes[i-1]['cost']
-            litres = pipes[i-1]['litres']
+            print(table[i-1][j], table[i-1][j-litres], cost)
             if (litres > j):
                 table[i][j] = table[i-1][j]
             else:
@@ -53,9 +54,7 @@ def trace(table, index, n, pipes):
     return route
 
 def test():
-    txt = { 'truck': 60, 'pipes': [ { 'name': 'pipe 1', 'cost': 10, 'litres': 20 }, { 'name': 'pipe 2', 'cost': 15, 'litres': 50 }, { 'name': 'pipe 3', 'cost': 4, 'litres': 25 }, { 'name': 'pipe 4', 'cost': 11, 'litres': 30 } ] }
-    solve(txt)
-    txt = { 'truck': 10, 'pipes': [ { 'name': 'pipe 3', 'cost': 4, 'litres': 2 }, { 'name': 'pipe 4', 'cost': 11, 'litres': 3 }, { 'name': 'pipe 1', 'cost': 1, 'litres': 4 }, { 'name': 'pipe 2', 'cost': 15, 'litres': 6} ] }
+    txt = { 'truck': 10, 'pipes': [ { 'name': 'pipe 3', 'cost': 4, 'litres': 2 }] }
     solve(txt)
 
 test()
